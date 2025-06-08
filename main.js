@@ -1,4 +1,4 @@
-const items = []
+let items = []
 
 function addItem() {
     const itemName = document.querySelector("#item").value
@@ -43,6 +43,8 @@ function showItemsList() {
             </div>
         `
     })
+
+    localStorage.setItem("items", JSON.stringify(items))
 }
 
 function removeItem(itemName) {
@@ -65,14 +67,6 @@ function removeItem(itemName) {
 function checkItem(itemName) {
     const item = items.find((item) => item.name === itemName)
 
-    // if(item.checked === true) {
-    //     item.checked = false
-    // } else {
-    //     item.checked = true
-    // }
-
-    // item.checked ? item.checked = false : item.checked = true
-
     item.checked = !item.checked
     showItemsList()
 }
@@ -80,3 +74,14 @@ function checkItem(itemName) {
 function addHideWarningClass() {
     document.querySelector(".warning").classList.add("hide-warning")
 }
+
+function verifyLocalStorageItems() {
+    const localStorageItems = localStorage.getItem("items")
+
+    if (localStorageItems) {
+        items = JSON.parse(localStorageItems)
+        showItemsList()
+    }
+}
+
+verifyLocalStorageItems()
